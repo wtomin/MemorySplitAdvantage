@@ -430,6 +430,8 @@ Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "totK.dat"}],totK[k]
 
 
 
+
+
 (* ::Subsection:: *)
 (*Functions to run P/N experiments given N/D*)
 
@@ -450,6 +452,7 @@ Ks = OptionValue["Ks"]},
 Do [
 \[Lambda] = 10^x;
 mydir = FileNameJoin[{saveDir, "ND="<>ToString @ StringForm["``", \[Psi]2], "lambda="<>ToString @ StringForm["``", \[Lambda]]}];
+
 Do[
 k = Ks[[i]];
 {\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->NbPoints, "minVal"-> -2.2-Log10[k], "maxVal"->2-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
@@ -472,6 +475,7 @@ Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "varNoiseK.dat"}],va
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "varDataK.dat"}],varDataK[k]];
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "biasK.dat"}],biasK[k]];
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "totK.dat"}],totK[k]];
+
 ,{i, 1, Length[Ks]}];
    ,{x, \[Lambda]Vals}];
    ];
@@ -507,6 +511,7 @@ t2[[i]][[j]][[1]] = t1[[i]][[j]][[1]] + Log10[k];
 ,{i, 1, 6}];
 {\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=t2;
 {varInK[k],varNoiseK[k],varDataK[k],biasK[k],totK[k]}=plotBiasVarRatioEvol["legPos"->{.825,.8},"\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->200, "minVal"-> -1, "maxVal"->2.0,"\[Lambda]"->10^-5,"\[Psi]1"->0.0,"F1"-> 1.0, "FStar"-> 0.0, "\[Tau]"-> 1.0,"k"->k,"plotRange"->{{-2,2},{0,3.0}},"pts"->{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}];
+(*The paramters above do not count. Only the parameters for \[CapitalPsi]1 to \[CapitalPsi]6 count*)
 Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "varInK.dat"}],varInK[k]];
 Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "varNoiseK.dat"}],varNoiseK[k]];
 Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "varDataK.dat"}],varDataK[k]];
