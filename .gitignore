@@ -1,0 +1,6 @@
+*.dat
+*.png
+*checkpoints
+*.pt
+*.gz
+*ubyte

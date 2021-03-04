@@ -22,7 +22,7 @@ def read_files(filename, save_dir, index=[1,2]):
 def plot_test_bias_var(test_error_file, bias_file, var_files, 
 	xmin=-2.0, xmax=2.0, ymin=0, ymax=2, figsize = (24, 8), 
 	index = [1,2], fill=True, save_dir = '',
-	title=True, xlabel=True):
+	title=True, xlabel=True, legend=True):
 	fig, axes = plt.subplots(1, 3, figsize=figsize)
 	# plot test error
 	data = read_files(test_error_file,save_dir, index=index)
@@ -37,8 +37,8 @@ def plot_test_bias_var(test_error_file, bias_file, var_files,
 		if title:
 			axes[0].set_title("Test Error")
 		if xlabel:
-			axes[0].set_xlabel(r'$Log_{10}[P/N]$')
-		
+			axes[0].set_xlabel(r'$Log_{10}[\frac{P}{N}]$')
+
 	data = read_files(bias_file,save_dir, index=index)
 	for i in index[1:]:
 		axes[1].plot(data[0][:,0], data[0][:,1], '-', label='K=1')
@@ -51,8 +51,8 @@ def plot_test_bias_var(test_error_file, bias_file, var_files,
 		if title:
 			axes[1].set_title(r"$Bias^{2}$")
 		if xlabel:
-			axes[1].set_xlabel(r'$Log_{10}[P/N]$')
-	
+			axes[1].set_xlabel(r'$Log_{10}[\frac{P}{N}]$')
+
 	all_data = [read_files(filename, save_dir, index=index) for filename in var_files]
 
 	for i in index[1:]:
@@ -74,7 +74,8 @@ def plot_test_bias_var(test_error_file, bias_file, var_files,
 		if xlabel:
 			axes[2].set_xlabel(r'$Log_{10}[\frac{P}{N}]$')
 
-	plt.legend()
+	if legend:
+		plt.legend()
 	plt.tight_layout()
 	plt.subplots_adjust(left = 0.06, wspace = 0.25)
 	plt.show()
@@ -83,12 +84,11 @@ def main():
 	index = [1, 2]
 	(xmin, xmax) = (-2.0, 1.0)
 	(ymin, ymax) = (0, 2)
-	save_dir = 'ResultsSingle/lambda=0.01/ND=10'
+	save_dir = 'ResultsSingle/lambda=0.01/ND=3.1622'
 	plot_test_bias_var('totK.dat', 'biasK.dat', ['varDataK.dat', 'varInK.dat', 'varNoiseK.dat'],
-		xmin, xmax, ymin, ymax, (36, 6),index, 
-		fill=False, save_dir = save_dir,
-		xlabel=True, title=True)
-
+		xmin, xmax, ymin, ymax, (36,5.5),index, 
+		fill=True, save_dir = save_dir,
+		xlabel=False, title=False, legend=False)
 
 if __name__ == '__main__':
 	main()
