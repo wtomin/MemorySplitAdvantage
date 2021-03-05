@@ -9,7 +9,7 @@ import os
 from scipy.interpolate import interp1d
 import pandas as pd
 
-marker_dict = {10: 'd', 100: 'x', 784:'+'}
+marker_dict = {10: '.', 100: 'd', 784:'+'}
 def plot_single_vs_ensemble(dfs_list, Ks_list, N_D, feature_dim, 
     ymin=0, ymax=1.0):
     assert len(dfs_list) == len(Ks_list)
@@ -58,5 +58,6 @@ def plot_single_vs_ensemble(dfs_list, Ks_list, N_D, feature_dim,
 if __name__ == '__main__':
     df1 = pd.read_csv("mnist_coef_0.01/singleNN_output.csv")
     df2 = pd.read_csv("mnist_coef_0.01/ensembleNNK=2_output.csv")
-    df3 = pd.read_csv("mnist_SGD_legacy_NN/num_iters_5000/singleNN_output.csv")
-    plot_single_vs_ensemble([df1, df2, df3], [1, 2, 1], N_D=1, feature_dim=784,)
+    df3 = pd.read_csv("mnist_SGD/num_iters_5000/singleNN_output.csv")
+    df4 = pd.read_csv("mnist_SGD/num_iters_5000/ensembleNNK=2_output.csv")
+    plot_single_vs_ensemble([df1, df2, df3, df4], [1, 2, 1, 2], N_D=1, feature_dim=784,)

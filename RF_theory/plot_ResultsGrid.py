@@ -106,11 +106,17 @@ def plot_total(template, xlabel, ylabel, save_dir, four_phases = {}, xmin=-1.0, 
 		plt.show()
 
 if __name__ == '__main__':
-	plot_total("ND=", xlabel= r'$Log_{10}[\frac{N}{D}]$', ylabel = r'$Log_{10}[\frac{P}{N}]$',
-		save_dir='ResultsGrid\\lambda=0.01', xmin = -1, xmax=2, ymin=-1, ymax=2, 
+	# plot_total("ND=", xlabel= r'$Log_{10}[\frac{N}{D}]$', ylabel = r'$Log_{10}[\frac{P}{N}]$',
+	# 	save_dir='ResultsGrid\\lambda=0.01', xmin = -1, xmax=2, ymin=-1, ymax=2, 
+	# 	index=[1,2], interpolation='bilinear', title=r'$\chi$', 
+	# 	four_phases={r"$Log_{10}[\frac{N}{D}]=-1$": -1, 
+	# 	r"$Log_{10}[\frac{N}{D}]=0.5$": 0.5, r"$Log_{10}[\frac{N}{D}]=1$": 1})
+	plot_total("lambda=", xlabel= r'$Log_{10}[\lambda]$', ylabel = r'$Log_{10}[\frac{P}{N}]$',
+		save_dir='ResultsGrid/ND=10', xmin = -4, xmax=0, ymin=-2, ymax=2, 
 		index=[1,2], interpolation='bilinear', title=r'$\chi$', 
-		four_phases={r"$Log_{10}[\frac{N}{D}]=-1$": -1, 
-		r"$Log_{10}[\frac{N}{D}]=0.5$": 0.5, r"$Log_{10}[\frac{N}{D}]=1$": 1})
+		four_phases={r"$Log_{10}[\lambda]=-4$": -4, 
+		r"$Log_{10}[\lambda]=0.5$": 0.5,})# given lambda
+
 
 
 
