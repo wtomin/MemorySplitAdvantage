@@ -364,7 +364,6 @@ If[Length[pts]==0,
 \[CapitalPsi]5=Select[\[CapitalPsi]5,#[[2]]>0.0&];
 \[CapitalPsi]6=Select[\[CapitalPsi]6,#[[2]]>0.0&];
 xVals=#[[1]]&/@\[CapitalPsi]1;
-
 varIn=Table[{xVals[[i]],1/k F1^2 (\[CapitalPsi]2[[i]][[2]]-\[CapitalPsi]4[[i]][[2]])},{i,1,Length[\[CapitalPsi]4]}];
 varNoise=Table[{xVals[[i]],(\[Tau]^2/k (\[CapitalPsi]3[[i]][[2]]-\[CapitalPsi]5[[i]][[2]])+\[Tau]^2 \[CapitalPsi]5[[i]][[2]])},{i,1,Length[\[CapitalPsi]5]}];
 varData=Table[{xVals[[i]],F1^2 \[CapitalPsi]4[[i]][[2]]-\[CapitalPsi]6[[i]][[2]]},{i,1,Length[\[CapitalPsi]6]}];
@@ -401,12 +400,12 @@ Ks = OptionValue["Ks"]},
 NDVals=N@Subdivide[minND, maxND, NDPoints-1];
 Do [
 \[Psi]2 = 10^x;
-mydir = FileNameJoin[{saveDir, "lambda="<>ToString @ StringForm["``", \[Lambda]], "ND="<>ToString @ StringForm["``", \[Psi]2 \[AliasDelimiter]]}];
+mydir = FileNameJoin[{saveDir, "lambda="<>ToString @ StringForm["``", \[Lambda]], "ND="<>ToString @ StringForm["``", \[Psi]2]}];
 Do[
 k = Ks[[i]];
-{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->NbPoints, "minVal"-> -2.5-Log10[k], "maxVal"->2.5-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
+{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->NbPoints, "minVal"-> -2.2-Log10[k], "maxVal"->2-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
 
-{\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->IntegerPart[NbPoints/2], "minVal"-> -0.2-Log10[k], "maxVal"->0.2-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
+{\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->25, "minVal"-> -0.2-Log10[k], "maxVal"->0.2-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
 pts1={\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg};
 pts2={\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin};
 t1 = Table[Sort[Join[pts1[[i]],pts2[[i]]]],{i,1,6}];
@@ -418,7 +417,7 @@ t2[[i]][[j]][[1]] = t1[[i]][[j]][[1]] + Log10[k];
 , {j, 1, Length[t2[[i]]]}];
 ,{i, 1, 6}];
 {\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=t2;
-{varInK[k],varNoiseK[k],varDataK[k],biasK[k],totK[k]}=plotBiasVarRatioEvol["legPos"->{.825,.8},"\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->200, "minVal"-> -2.0, "maxVal"->2.0,"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0,"F1"-> 1.0, "FStar"-> 0.0, "\[Tau]"-> 1.0,"k"->k,"plotRange"->{{-2,2},{0,3.0}},"pts"->{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}];
+{varInK[k],varNoiseK[k],varDataK[k],biasK[k],totK[k]}=plotBiasVarRatioEvol["legPos"->{.825,.8},"\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->200, "minVal"-> -1, "maxVal"->2.0,"\[Lambda]"->10^-5,"\[Psi]1"->0.0,"F1"-> 1.0, "FStar"-> 0.0, "\[Tau]"-> 1.0,"k"->k,"plotRange"->{{-2,2},{0,3.0}},"pts"->{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}];
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "varInK.dat"}],varInK[k]];
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "varNoiseK.dat"}],varNoiseK[k]];
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "varDataK.dat"}],varDataK[k]];
@@ -427,8 +426,6 @@ Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "totK.dat"}],totK[k]
 ,{i, 1, Length[Ks]}];
     ,{x, NDVals}];
     ];
-
-
 
 
 
@@ -455,12 +452,11 @@ Ks = OptionValue["Ks"]},
 Do [
 \[Lambda] = 10^x;
 mydir = FileNameJoin[{saveDir, "ND="<>ToString @ StringForm["``", \[Psi]2], "lambda="<>ToString @ StringForm["``", \[Lambda]]}];
-
 Do[
 k = Ks[[i]];
-{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->NbPoints, "minVal"-> -2.5-Log10[k], "maxVal"->2.5-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
+{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->NbPoints, "minVal"-> -2.2-Log10[k], "maxVal"->2-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
 (*in order to obtain more points around the interpolation threshold P/N\[Element][10^-0.2,10^0.2] *)
-{\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->IntegerPart[NbPoints/2], "minVal"-> -0.2-Log10[k], "maxVal"->0.2-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
+{\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->25, "minVal"-> -0.2-Log10[k], "maxVal"->0.2-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
 pts1={\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg};
 pts2={\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin};
 t1 = Table[Sort[Join[pts1[[i]],pts2[[i]]]],{i,1,6}];
@@ -472,13 +468,12 @@ t2[[i]][[j]][[1]] = t1[[i]][[j]][[1]] + Log10[k];
 , {j, 1, Length[t2[[i]]]}];
 ,{i, 1, 6}];
 {\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=t2;
-{varInK[k],varNoiseK[k],varDataK[k],biasK[k],totK[k]}=plotBiasVarRatioEvol["legPos"->{.825,.8},"\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->200, "minVal"-> -2.0, "maxVal"->2.0,"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0,"F1"-> 1.0, "FStar"-> 0.0, "\[Tau]"-> 1.0,"k"->k,"plotRange"->{{-2,2},{0,3.0}},"pts"->{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}];
+{varInK[k],varNoiseK[k],varDataK[k],biasK[k],totK[k]}=plotBiasVarRatioEvol["legPos"->{.825,.8},"\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->200, "minVal"-> -1, "maxVal"->2.0,"\[Lambda]"->10^-5,"\[Psi]1"->0.0,"F1"-> 1.0, "FStar"-> 0.0, "\[Tau]"-> 1.0,"k"->k,"plotRange"->{{-2,2},{0,3.0}},"pts"->{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}];
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "varInK.dat"}],varInK[k]];
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "varNoiseK.dat"}],varNoiseK[k]];
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "varDataK.dat"}],varDataK[k]];
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "biasK.dat"}],biasK[k]];
 Export[FileNameJoin[{mydir, ToString @ StringForm["``", k], "totK.dat"}],totK[k]];
-
 ,{i, 1, Length[Ks]}];
    ,{x, \[Lambda]Vals}];
    ];
@@ -501,11 +496,10 @@ Do[
 k = Ks[[i]];
 {\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->NbPoints, "minVal"-> -2.5-Log10[k], "maxVal"->2.5-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
 (*in order to obtain more points around the interpolation threshold P/N\[Element][10^-0.2,10^0.2] *)
-{\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->IntegerPart[NbPoints/2], "minVal"-> -0.2-Log10[k], "maxVal"->0.2-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
+{\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->25, "minVal"-> -0.2-Log10[k], "maxVal"->0.2-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
 pts1={\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg};
 pts2={\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin};
 t1 = Table[Sort[Join[pts1[[i]],pts2[[i]]]],{i,1,6}];
-
 t2 = t1;
 (*Replace the x value*)
 Do[
@@ -513,10 +507,49 @@ Do [
 t2[[i]][[j]][[1]] = t1[[i]][[j]][[1]] + Log10[k];
 , {j, 1, Length[t2[[i]]]}];
 ,{i, 1, 6}];
-
 {\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=t2;
-{varInK[k],varNoiseK[k],varDataK[k],biasK[k],totK[k]}=plotBiasVarRatioEvol["legPos"->{.825,.8},"\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->200, "minVal"-> -2.0, "maxVal"->2.0,"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0,"F1"-> 1.0, "FStar"-> 0.0, "\[Tau]"-> 1.0,"k"->k,"plotRange"->{{-2,2},{0,3.0}},"pts"->{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}];
-(*The paramters above do not count. Only the parameters for \[CapitalPsi]1 to \[CapitalPsi]6 count*)
+{varInK[k],varNoiseK[k],varDataK[k],biasK[k],totK[k]}=plotBiasVarRatioEvol["legPos"->{.825,.8},"\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->200, "minVal"-> -1, "maxVal"->2.0,"\[Lambda]"->10^-5,"\[Psi]1"->0.0,"F1"-> 1.0, "FStar"-> 0.0, "\[Tau]"-> 1.0,"k"->k,"plotRange"->{{-2,2},{0,3.0}},"pts"->{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}];
+Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "varInK.dat"}],varInK[k]];
+Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "varNoiseK.dat"}],varNoiseK[k]];
+Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "varDataK.dat"}],varDataK[k]];
+Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "biasK.dat"}],biasK[k]];
+Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "totK.dat"}],totK[k]];
+,{i, 1, Length[Ks]}];
+];
+
+
+(* ::Subsection:: *)
+(*Functions to run P/N experiments for all Ks given N/D and regularization*)
+
+
+ClearAll[getValueEnsembleKs];
+Options[getValueGivenNDandLambda]:={"ND" -> 1.0, "\[Lambda]"-> 0.01, "NbPoints"->50, "saveDir"-> None, "Ks"-> {1, 2}, "minVal"->-2.5, "maxVal"->2.5};
+getValueGivenNDandLambda[OptionsPattern[]]:= Module[{
+ND=OptionValue["ND"],
+\[Lambda]=OptionValue["\[Lambda]"],
+NbPoints = OptionValue["NbPoints"],
+saveDir=OptionValue["saveDir"],
+Ks = OptionValue["Ks"],
+minVal = OptionValue["minVal"],
+maxVal = OptionValue["maxVal"]},
+\[Psi]2 = ND;
+Do[
+k = Ks[[i]];
+{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->NbPoints, "minVal"-> minVal-Log10[k], "maxVal"->maxVal-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
+(*in order to obtain more points around the interpolation threshold P/N\[Element][10^-0.2,10^0.2] *)
+{\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin}=plotTermbyTermEvol["\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->25, "minVal"-> -0.2-Log10[k], "maxVal"->0.2-Log10[k],"\[Lambda]"->\[Lambda],"\[Psi]1"->0.0];
+pts1={\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg};
+pts2={\[CapitalPsi]1fin,\[CapitalPsi]2fin,\[CapitalPsi]3fin,\[CapitalPsi]4fin,\[CapitalPsi]5fin,\[CapitalPsi]6fin};
+t1 = Table[Sort[Join[pts1[[i]],pts2[[i]]]],{i,1,6}];
+t2 = t1;
+(*Replace the x value*)
+Do[
+Do [
+t2[[i]][[j]][[1]] = t1[[i]][[j]][[1]] + Log10[k];
+, {j, 1, Length[t2[[i]]]}];
+,{i, 1, 6}];
+{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}=t2;
+{varInK[k],varNoiseK[k],varDataK[k],biasK[k],totK[k]}=plotBiasVarRatioEvol["legPos"->{.825,.8},"\[Psi]2"->\[Psi]2,"plot"->False, "NbPoints"->200, "minVal"-> -1, "maxVal"->2.0,"\[Lambda]"->10^-5,"\[Psi]1"->0.0,"F1"-> 1.0, "FStar"-> 0.0, "\[Tau]"-> 1.0,"k"->k,"plotRange"->{{-2,2},{0,3.0}},"pts"->{\[CapitalPsi]1lowreg,\[CapitalPsi]2lowreg,\[CapitalPsi]3lowreg,\[CapitalPsi]4lowreg,\[CapitalPsi]5lowreg,\[CapitalPsi]6lowreg}];
 Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "varInK.dat"}],varInK[k]];
 Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "varNoiseK.dat"}],varNoiseK[k]];
 Export[FileNameJoin[{saveDir, ToString @ StringForm["``", k], "varDataK.dat"}],varDataK[k]];

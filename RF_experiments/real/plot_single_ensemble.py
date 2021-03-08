@@ -9,7 +9,7 @@ import os
 from scipy.interpolate import interp1d
 import pandas as pd
 
-marker_dict = {10: '.', 100: 'd', 784:'+'}
+marker_dict = {10: '.', 784:'+'}
 def plot_single_vs_ensemble(dfs_list, Ks_list, N_D, feature_dim, 
     ymin=0, ymax=1.0):
     assert len(dfs_list) == len(Ks_list)
@@ -37,27 +37,28 @@ def plot_single_vs_ensemble(dfs_list, Ks_list, N_D, feature_dim,
             axes1[1].scatter(P_N, bias2, label=label, marker=marker, color=color)
             axes1[2].scatter(P_N, var, label=label, marker=marker, color=color)
         
-    axes1[0].set_xlabel(r'$Log_{10}[\frac{P}{N}]$')
+    axes1[0].set_xlabel(r'$\frac{P}{N}$')
     axes1[0].set_xticks([-2, -1, 0, 1])
-    axes1[0].set_title("Test Loss")
+    axes1[0].set_xticklabels([r"$10^{%s}$"%str(x) for x in [-2, -1, 0, 1]])
+    axes1[0].set_title("Test Error")
     axes1[0].set_ylim(ymin, ymax)
     
-    axes1[1].set_xlabel(r'$Log_{10}[\frac{P}{N}]$')
+    axes1[1].set_xlabel(r'$\frac{P}{N}$')
     axes1[1].set_title(r"$Bias^{2}$")
     axes1[1].set_xticks([-2, -1, 0, 1])
+    axes1[1].set_xticklabels([r"$10^{%s}$"%str(x) for x in [-2, -1, 0, 1]])
     axes1[1].set_ylim(ymin, ymax)
     
-    axes1[2].set_xlabel(r'$Log_{10}[\frac{P}{N}]$')
+    axes1[2].set_xlabel(r'$\frac{P}{N}$')
     axes1[2].set_title("Variance")
     axes1[2].set_xticks([-2, -1, 0, 1])
+    axes1[2].set_xticklabels([r"$10^{%s}$"%str(x) for x in [-2, -1, 0, 1]])
     axes1[2].set_ylim(ymin, ymax)
     #fig1.suptitle("Bias-Variance Decomposition (N/D={:.2f})".format(N_D))
     plt.legend(fontsize='x-small')
     plt.show()
 
 if __name__ == '__main__':
-    df1 = pd.read_csv("mnist_coef_0.01/singleNN_output.csv")
-    df2 = pd.read_csv("mnist_coef_0.01/ensembleNNK=2_output.csv")
-    df3 = pd.read_csv("mnist_SGD/num_iters_5000/singleNN_output.csv")
-    df4 = pd.read_csv("mnist_SGD/num_iters_5000/ensembleNNK=2_output.csv")
-    plot_single_vs_ensemble([df1, df2, df3, df4], [1, 2, 1, 2], N_D=1, feature_dim=784,)
+    df1 = pd.read_csv("mnist_SGD/num_iters_500_coef=0.0001/singleNN_output.csv")
+    df2 = pd.read_csv("mnist_SGD/num_iters_500_coef=0.0001/ensembleNNK=2_output.csv")
+    plot_single_vs_ensemble([df1, df2], [1, 2], N_D=1, feature_dim=784, ymin=0, ymax=2.0)
